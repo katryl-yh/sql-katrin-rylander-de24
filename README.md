@@ -1,1 +1,1 @@
-# sql-katrin-rylander-de24
+# SQL course using duckdb
