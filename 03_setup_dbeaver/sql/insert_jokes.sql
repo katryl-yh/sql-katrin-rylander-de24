@@ -4,7 +4,6 @@ INSERT
 	joke_text,
 	rating
 )
-	
 VALUES
 (0, 
 'supah fun joke',
