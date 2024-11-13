@@ -1,0 +1,22 @@
+2. Theory questions
+These study questions are good to get an overview of how SQL and relational databases work.
+
+  a) What is SQL, and why is it important in relational databases?
+
+  b) Explain the difference between HAVING and WHERE clauses.
+
+  c) Explain the purpose of the LIMIT or TOP clause in a SQL query.
+
+  d) What are the primary functions of the Data Definition Language (DDL) in SQL?
+
+  e) Explain the differences between the Data Manipulation Language (DML) and Data Definition Language (DDL).
+
+  f) What type of dot commands are there in duckdb?
+
+  g) What makes DuckDB unique compared to other databases?
+
+  h) Is DuckDB suitable for real-time data processing?
+
+  i) Difference between read_csv and read_csv_auto
+
+  j) What is the purpose and advantages of using an IDE such as DBeaver?
