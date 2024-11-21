@@ -26,5 +26,27 @@ desc;
 -- string concatenation with 'student_' || id
 SELECT
 	UNNEST (generate_series(100)) AS id,
-	'student_' || id ; 
+	'student_' || id AS student,
+	ROUND(RANDOM()*100) AS scores; 
 
+------------------------------------------------------------------------------------------------------------------------------
+-- we will also assign grade based on the score
+-- data can be generated in SQL ... BUT there are other tools that are easier , for example Python
+-- so we will be most often generating data in Python or other tools and ingesting them into a database!!!
+SELECT -- here I am refering to a database that was created inside FROM!!!
+	id, 
+	'student_' || id AS student,
+	score,
+	CASE
+		WHEN score < 50 THEN 'F'
+		WHEN score < 75 THEN 'G'
+		ELSE  'VG'
+	END AS grade
+FROM
+	(
+	SELECT -- Here I am making a database
+		UNNEST (generate_series(100)) AS id, 
+		ROUND(RANDOM()*100) AS score,
+	);
+	
+	
