@@ -44,9 +44,28 @@ SELECT -- here I am refering to a database that was created inside FROM!!!
 	END AS grade
 FROM
 	(
+	-- subquery
 	SELECT -- Here I am making a database
 		UNNEST (generate_series(100)) AS id, 
 		ROUND(RANDOM()*100) AS score,
 	);
 	
-	
+-- synthetic sales data
+SELECT
+	'customer_' || order_id AS customer_name,
+	DATE '2024-01-01' + (order_id-1) * INTERVAL '1 day' AS order_date,
+	ROUND(RANDOM() * 1000,
+	2) AS order_amount,
+	CASE
+		WHEN RANDOM() < 0.7 THEN 'completed'
+		WHEN RANDOM() < 0.9 THEN 'pending'
+		ELSE 'cancelled'
+	END AS order_status
+FROM
+	(
+	SELECT
+		UNNEST (generate_series(1,
+		100)) AS order_id
+);
+
+-- use create table if we want it to store 
