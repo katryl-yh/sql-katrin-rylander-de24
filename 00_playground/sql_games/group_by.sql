@@ -1,3 +1,4 @@
+-- Based on website:  https://learnsql.com/blog/group-by-exercises/
 -- a simple query that uses GROUP BY to calculate the number of games produced by each company
 -- this query tells the database to create groups of rows from the table games that have the same value in the company column
 
@@ -126,30 +127,6 @@ ORDER BY -- 4
 -- For each group, we then calculate the expression SUM(revenue - production_cost) = gross profit
 
 --------------------------------------------------------------------------
--- Exercise 7:
--- Generate report to show:
--- 		the yearly gross profit for each company, 
--- 		the gross profit of the previous year, 
--- 		the difference between both years! 
--- Use the previous query as a starting point!
-
-CREATE TABLE IF NOT EXISTS main.comany_gross_profit AS (
-SELECT
-	company,
-	production_year,
-	SUM(revenue - production_cost) AS gross_profit_year
-FROM 
-	main.games
-GROUP BY
-	company,
-	production_year
-ORDER BY 
-	company,
-	production_year) ;
-
--- OBS: CTEs, or common table expressions, are an advanced feature of SQL!
-
---------------------------------------------------------------------------
 -- Exercise 8:
 -- For each company, select:
 -- 		name, 
@@ -168,3 +145,38 @@ GROUP BY
 HAVING
 	number_of_games > 1;
 	
+--------------------------------------------------------------------------
+-- Exercise 9:
+-- We are interested in good games produced between 2000 and 2009. 
+-- A good game has profit > 0 AND rating > 6. 
+-- For each company:
+-- 		show the company name, 
+-- 		its total revenue from good games produced between 2000 and 2009 --> revenue_sum
+-- 		the number of good games it produced in this period --> number_of_games
+-- HAVING: Only show companies with good-game revenue over 3 000 000. (NOTE: 4000000 in origina Q but returns 0 records!)
+
+SELECT
+	company,
+	COUNT(title) AS number_of_games,
+	SUM(revenue) AS revenue_sum
+FROM
+	main.games
+WHERE
+	(production_year BETWEEN 2000 AND 2009)
+	AND rating > 6
+	AND (revenue - production_cost > 0)
+GROUP BY
+	company
+	HAVING revenue_sum > 3000000;
+
+-- Explanation:
+
+-- use GROUP BY company because the metrics we want to obtain (number_of_games and revenue_sum) are at the company level.
+-- Some filters are at row level and must be in the WHERE clause, example:
+-- production_year BETWEEN 2000 AND 2009
+-- rating > 6
+-- revenue - production_cost > 0
+-- However there is another filter at the group level, which must be put in the HAVING column:
+-- SUM(revenue) > 4000000
+	
+
