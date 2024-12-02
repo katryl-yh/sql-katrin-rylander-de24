@@ -51,17 +51,17 @@ SELECT
 FROM
 	main.cleaned_salaries; 
 
---   low        --> lower than 50000
---   medium     --> BETWEEN 50000 AND 130000
---   high       --> BETWEEN 130001 AND 250000
+--   low        --> lower than 50000 | KG: 9300
+--   medium     --> BETWEEN 50000 AND 130000 | KG: 
+--   high       --> BETWEEN 130001 AND 250000 | KG: 
 --   insanely_high --> higher than 250001
 
 -- run some checking if it works
 SELECT
 	CASE
 		WHEN monthly_salary_sek < 50000 THEN 'Low'
-		WHEN monthly_salary_sek BETWEEN 50000 AND 130000 THEN 'Medium'
-		WHEN monthly_salary_sek BETWEEN 130001 AND 250000 THEN 'High'
+		WHEN monthly_salary_sek < 130000 THEN 'Medium'
+		WHEN monthly_salary_sek < 250000 THEN 'High'
 		ELSE 'Insanely high'
 	END AS salary_level, monthly_salary_sek 
 FROM
@@ -99,7 +99,7 @@ FROM
 	main.cleaned_salaries;
 
 ------------ create a new table -------
-CREATE TABLE main.kr_cleaned_salaries  AS
+CREATE OR REPLACE TABLE main.kr_cleaned_salaries  AS
 SELECT experience_level,
 	employment_type,
 	job_title,
