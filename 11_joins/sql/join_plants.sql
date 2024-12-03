@@ -26,6 +26,15 @@ FROM
 LEFT JOIN main.plant_care pc 
 ON
 	p.plant_id = pc.plant_id ;
+
+-- LEFT JOIN again but with all columns selected
+SELECT
+	* 
+FROM
+	main.plants p
+LEFT JOIN main.plant_care pc 
+ON
+	p.plant_id = pc.plant_id ;
 	
 -- RIGHT JOIN:
 -- it returns all records from the right table , 
@@ -37,6 +46,15 @@ SELECT
 	p.type,
 	pc.water_schedule,
 	pc.sunlight 
+FROM
+	main.plants p
+RIGHT JOIN main.plant_care pc 
+ON
+	p.plant_id = pc.plant_id ;
+
+-- RIGHT JOIN with all columns
+SELECT
+	*
 FROM
 	main.plants p
 RIGHT JOIN main.plant_care pc 
@@ -58,6 +76,15 @@ FROM
 INNER JOIN main.plant_care pc 
 ON
 	p.plant_id = pc.plant_id ;
+
+-- INNER JOIN with all columns
+SELECT
+	*
+FROM
+	main.plants p
+INNER JOIN main.plant_care pc 
+ON
+	p.plant_id = pc.plant_id ;
 	
 -- FULL JOIN:
 -- retrieves all rows from both tables, including matches. 
@@ -68,6 +95,15 @@ SELECT
 	p.type,
 	pc.water_schedule,
 	pc.sunlight 
+FROM
+	main.plants p
+FULL JOIN main.plant_care pc 
+ON
+	p.plant_id = pc.plant_id ;
+	
+-- FULL JOIN with all columns
+SELECT
+	*
 FROM
 	main.plants p
 FULL JOIN main.plant_care pc 
