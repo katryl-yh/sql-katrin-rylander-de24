@@ -102,10 +102,13 @@ ORDER BY total DESC;
 
 -- g) Who are the top 10 customers by number of rentals?
 
-SELECT customer_id,
-	   COUNT(customer_id) AS number_rentals
-FROM main.rental 
-GROUP BY customer_id
+SELECT c.first_name, c.last_name, r.customer_id ,
+	   COUNT(r.customer_id) AS number_rentals
+FROM main.rental r
+LEFT JOIN main.customer c 
+ON
+	r.customer_id = c.customer_id 
+GROUP BY r.customer_id, c.first_name, c.last_name 
 ORDER BY number_rentals DESC
 LIMIT 10;
 
@@ -119,9 +122,65 @@ FROM
 	main.customer c
 INNER JOIN 
 	main.rental r ON c.customer_id = r.customer_id
-GROUP BY c.first_name , c.last_name , c.customer_id 
+GROUP BY  c.customer_id ,c.first_name , c.last_name
 ORDER BY number_rentals DESC
 LIMIT 10;
 
 --  h) Retrieve a list of all customers and what films they have rented.
 
+SELECT
+	c.first_name,
+	c.last_name,
+	f.title
+FROM
+	main.rental r
+LEFT JOIN main.customer c 
+ON
+	r.customer_id = c.customer_id
+LEFT JOIN main.inventory i 
+ON
+	i.inventory_id = r.inventory_id
+LEFT JOIN main.film f 
+ON
+	i.film_id = f.film_id
+ORDER BY
+	r.customer_id
+LIMIT 100;
+
+----------------- from Andreas
+SELECT * FROM main.rental r ;
+SELECT * FROM main.rental r ;
+SELECT * FROM main.film f;
+
+SELECT
+	c.first_name,
+	c.last_name,
+	f.title
+FROM
+	main.customer c
+INNER JOIN 
+	main.rental r ON c.customer_id = r.customer_id
+INNER JOIN 
+	main.inventory i ON r.inventory_id = i.inventory_id
+INNER JOIN
+	main.film f ON i.film_id = f.film_id 
+ORDER BY c.first_name, c.last_name ;
+
+-- i) Make a more extensive EDA of your choice on the Sakila database.
+-- same as above but the film_ids are put into a list!
+
+SELECT c.first_name, c.last_name,  COUNT(r.customer_id) AS number_rentals,
+	   STRING_AGG(CAST(i.film_id AS TEXT), ', ') AS film_id_list
+FROM main.rental r
+LEFT JOIN main.customer c 
+ON
+	r.customer_id = c.customer_id 
+LEFT JOIN main.inventory i 
+ON
+	i.inventory_id = r.inventory_id 
+LEFT JOIN main.film f 
+ON
+	i.film_id = f.film_id 
+GROUP BY r.customer_id, c.first_name, c.last_name 
+ORDER BY number_rentals DESC
+LIMIT 100;
