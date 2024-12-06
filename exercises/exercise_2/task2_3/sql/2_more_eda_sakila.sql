@@ -85,7 +85,7 @@ ORDER BY total DESC;
 
 SELECT
 	rating,
-	count(title) AS total
+	COUNT(title) AS total
 FROM
 	main.film
 GROUP BY rating

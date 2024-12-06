@@ -20,7 +20,7 @@ WHERE
 ORDER BY
 	last_name ;
 
--- b) How many customers and actors starts have the the letters 'ann' in there first names?
+-- b) How many customers and actors have the letters 'ann' in there first names?
 
 SELECT
 	COUNT(c.first_name),
@@ -28,7 +28,7 @@ SELECT
 FROM
 	main.customer c
 WHERE
-	c.first_name LIKE '%ANN%'
+	LOWER(c.first_name) LIKE '%ann%'
 UNION ALL 
 SELECT
 	COUNT(a.first_name),
@@ -36,7 +36,7 @@ SELECT
 FROM
 	main.actor a
 WHERE
-	a.first_name LIKE '%ANN%'
+	LOWER(a.first_name) LIKE '%ann%'
 ;
 -------------------------------------------------------
 -------------------------------------------------------
@@ -45,18 +45,20 @@ WHERE
 SELECT 'customer' AS type, COUNT(c.first_name) AS total_count
 FROM main.customer c
 WHERE
-	c.first_name LIKE '%ANN%'
+	LOWER(c.first_name) LIKE '%ann%'
 UNION ALL
 SELECT 'actor' AS type, COUNT(a.first_name) AS total_count
 FROM
 	main.actor a
 WHERE
-	a.first_name LIKE '%ANN%'
+	LOWER(a.first_name) LIKE '%ann%'
 UNION ALL
 SELECT 'total' AS type, 
-		(SELECT COUNT(c.first_name) FROM main.customer c WHERE 	c.first_name LIKE '%ANN%') +
-		(SELECT COUNT(a.first_name) FROM main.actor a WHERE a.first_name LIKE '%ANN%')AS total_count
+		(SELECT COUNT(c.first_name) FROM main.customer c WHERE 	LOWER(c.first_name) LIKE '%ann%') +
+		(SELECT COUNT(a.first_name) FROM main.actor a WHERE LOWER(a.first_name) LIKE '%ann%')AS total_count
 ;
+
+-- TO DO: att göra igen med cte
 
 
 -- c) In which cities and countries do the customers live in?
