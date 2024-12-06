@@ -59,7 +59,25 @@ SELECT 'total' AS type,
 ;
 
 -- TO DO: att göra igen med cte
-
+WITH name_data AS (
+SELECT 'customer' AS type, COUNT(c.first_name) AS total_count
+FROM main.customer c
+WHERE
+	LOWER(c.first_name) LIKE '%ann%'
+UNION ALL
+SELECT 'actor' AS type, COUNT(a.first_name) AS total_count
+FROM
+	main.actor a
+WHERE
+	LOWER(a.first_name) LIKE '%ann%'
+)
+SELECT * FROM name_data
+UNION ALL
+SELECT
+	'total' AS type, SUM(total_count)
+FROM
+	name_data nd
+;
 
 -- c) In which cities and countries do the customers live in?
 
